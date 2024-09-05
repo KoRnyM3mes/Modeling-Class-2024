@@ -1,0 +1,12 @@
+polyCube -w 5.5 -h 5.5 -d 5.5 -sx 1 -sy 1 - sz 1 -ax 0 1 0 -cuv 4 - ch 1 -name "HouseBase"
+move -r -os -wd 0 2.75 0 
+
+polyCube -w 7 -h 1.5 -d 7 -sx 1 -sy 1 - sz 3 -ax 0 1 0 -cuv 4 - ch 1 -name "Roof"
+move -r -os -wd 0 6.25 0 
+select -r Roof.e[4] ;
+select -tgl Roof.e[1] ;
+move -r -os -wd 0 -1.5 0 ;
+
+polyCylinder -r .5 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1 - name "chimney";
+move -r -os -wd 2 6.5 2;
+
