@@ -1,0 +1,15 @@
+//define values
+string $selectedGeo[];
+string $text;
+
+//where geometry is
+float $position[] = {1, 0, 0};
+//                   x  y  z
+//scale of geometry
+float $scale[] = {2, 3, 2}
+//                x  y  z
+
+//define geometry
+$selectedGeo = `polyCube -w $scale[0] -h $scale[1] -d $scale[2] -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1 -name "BaseStand"`;
+print($selectedGeo);
+
