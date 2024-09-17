@@ -2,13 +2,15 @@ proc MakeStairs(int $numOfStairs, float $stairScale[], float $pivotXYZ[], float 
 {
     string $selectedGeo[];
     $selectedGeo = `polyCube -w $stairScale[0] -h $stairScale[1] -d $stairScale[2] -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1 -n "Step1"`;
-    xform -ws -pivots $pivotXYZ[0] $pivotXYZ[1] $pivotXYZ[2]  -translation 0 ($stairScale[1] / 2) 0 $selectedGeo;
+    xform -ws -pivots $pivotXYZ[0] $pivotXYZ[1] $pivotXYZ[2] -translation 0 ($stairScale[1] / 2) 0 $selectedGeo;
     
     for ($i = 0; $i < $numOfStairs; $i++)
         { 
            $selectedGeo = `duplicate $selectedGeo`;
-           xform -relative -t 0 $stairScale[1] $stairScale[2];
+           manipPivot -o 0 $rotation 0;
+           xform -relative -ro 0 $rotation 0 -t 0 $stairScale[1] $stairScale[2];
         }
 }
 
-MakeStairs(4, {5, 1, 3}, {-2.5, -.5, 0}, 0);
+
+MakeStairs(10, {5, 1, 3}, {-2.5, -.5, 0}, -25);
