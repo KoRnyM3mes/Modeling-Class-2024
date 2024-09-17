@@ -1,15 +1,20 @@
 proc MakeStairs(int $numOfStairs, float $stairScale[], float $pivotXYZ[], float $rotation)
-{
+{ //                                     {x, y, z}      {x, y, z}
     string $selectedGeo[];
+    //makes initial step
     $selectedGeo = `polyCube -w $stairScale[0] -h $stairScale[1] -d $stairScale[2] -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1 -n "Step1"`;
     xform -ws -pivots $pivotXYZ[0] $pivotXYZ[1] $pivotXYZ[2] -translation 0 ($stairScale[1] / 2) 0 $selectedGeo;
+    //sets pivot locations and puts the first step on grid
     
     for ($i = 0; $i < $numOfStairs; $i++)
         { 
            $selectedGeo = `duplicate $selectedGeo`;
-           manipPivot -o 0 $rotation 0;
-           xform -relative -ro 0 $rotation 0 -t 0 $stairScale[1] $stairScale[2];
+           print($selectedGeo);
+           xform -relative -rotatePivot 0 $rotation 0 -ro 0 $rotation 0 -t 0 $stairScale[1] $stairScale[2] $selectedGeo;
         }
+    /* supposed to create spiral stairs by duplicating the step
+    rotating the pivot, and then adjust, but the rotate pivot command
+    it translating it instead??*/
 }
 
 
