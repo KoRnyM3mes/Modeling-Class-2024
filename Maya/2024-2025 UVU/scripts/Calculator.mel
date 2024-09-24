@@ -51,15 +51,35 @@ proc Multiplication(float $input[])
 proc Division(float $input[])
 {
 
+        float $result = $input[0];
+
+    if (size($input) == 0) {
+        print("please input a number");
+    } else {
+        for ($i = 1; $i < size($input); $i++)
+        {
+            if ($input[$i] == 0){
+                print("DIVIDE BY ZERO\n");
+                $result = 0;
+                break;
+            }
+            $result /= $input[$i];
+        }     
+    }
+
+    print($result);
 }
+
 proc Power(float $input[])
 {
 
 }
+
 proc Mean(float $input[])
 {
 
 }
+
 proc Median(float $input[])
 {
 
