@@ -34,8 +34,20 @@ proc Difference(float $input[])
 
 proc Multiplication(float $input[])
 {
+        float $result = 1;
 
+    if (size($input) == 0) {
+        print("please input a number");
+    } else {
+        for ($i = 0; $i < size($input); $i++)
+        {
+             $result *= $input[$i];
+        }     
+    }
+
+    print($result);
 }
+
 proc Division(float $input[])
 {
 
