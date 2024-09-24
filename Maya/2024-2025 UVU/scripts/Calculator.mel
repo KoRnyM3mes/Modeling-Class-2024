@@ -1,0 +1,43 @@
+proc Sum(float $input[])
+{
+    float $result = 0;
+
+    if (size($input) == 0) {
+        print("please input a number");
+    } else {
+        for ($i = 0; $i < size($input); $i++)
+        {
+             $result += $input[$i];
+        }     
+    }
+
+    print($result);
+}
+
+Sum(0);
+
+proc Difference(float $input[])
+{
+
+}
+
+proc Multiplication(float $input[])
+{
+
+}
+proc Division(float $input[])
+{
+
+}
+proc Power(float $input[])
+{
+
+}
+proc Mean(float $input[])
+{
+
+}
+proc Median(float $input[])
+{
+
+}
