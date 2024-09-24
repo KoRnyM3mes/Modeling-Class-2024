@@ -1,69 +1,70 @@
-proc Sum(float $input[])
+proc float Sum(float $input[])
 {
     float $result = 0;
 
     if (size($input) == 0) {
         print("please input a number");
-    } else {
-        for ($i = 0; $i < size($input); $i++)
-        {
-             $result += $input[$i];
-        }     
-        print($result);
+        return 0;
     }
+
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $result += $input[$i];
+    }     
+        return $result;    
 }
 
-proc Difference(float $input[])
+proc float Difference(float $input[])
 {
-        float $result = $input{0};
+    float $result = $input{0};
 
     if (size($input) == 0) {
         print("please input a number");
-    } else {
-        for ($i = 1; $i < size($input); $i++)
-        {
-             $result -= $input[$i];
-        } 
-        print($result);    
+        return 0;
     }
+    for ($i = 1; $i < size($input); $i++)
+    {
+        $result -= $input[$i];
+    } 
+    return $result;    
 }
 
-proc Multiplication(float $input[])
+proc float Multiplication(float $input[])
 {
     float $result = 1;
 
     if (size($input) == 0) {
         print("please input a number");
-    } else {
-        for ($i = 0; $i < size($input); $i++)
-        {
-             $result *= $input[$i];
-        }
-        print($result);   
+        return 0;
     }
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $result *= $input[$i];
+    }
+    return $result;   
 }
 
-proc Division(float $input[])
+proc float Division(float $input[])
 {
     float $result = $input[0];
 
     if (size($input) == 0) {
         print("please input a number");
-    } else {
-        for ($i = 1; $i < size($input); $i++)
-        {
-            if ($input[$i] == 0){
-                print("DIVIDE BY ZERO\n");
-                $result = 0;
-                break;
-            }
-            $result /= $input[$i];
-        } 
-        print($result);    
+        return 0;
     }
+    for ($i = 1; $i < size($input); $i++)
+    {
+        if ($input[$i] == 0){
+            print("DIVIDE BY ZERO\n");
+            $result = 0;
+            break;
+        }
+        $result /= $input[$i];
+    } 
+    return $result;    
 }
 
-proc Power(float $base, float $power)
+proc float Power(float $base, float $power)
 {
     float $result = $base;
 
@@ -71,23 +72,23 @@ proc Power(float $base, float $power)
     {
         $result *= $base;
     }
-    print($result);   
+    return $result;   
 }
 
-proc Mean(float $input[])
+proc float Mean(float $input[])
 {
     float $result = 0;
 
     if (size($input) == 0) {
         print("please input a number");
-    } else {
-        for ($i = 0; $i < size($input); $i++)
-        {
-             $result += $input[$i];
-        }
-        $result = ($result / size($input));
-        print($result);  
+        return 0;
     }
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $result += $input[$i];
+    }
+    $result = ($result / size($input));
+    return $result;  
 }
 
 proc Median(float $input[])
@@ -96,8 +97,9 @@ proc Median(float $input[])
 
     if (size($input) == 0) {
         print("please input a number");
+        return 0;
     }
-
+    
     for ($i = 0; $i < (size($input) - 1); $i++) {
         for ($j = $i + 1; $j < size($input); $j++) {
             if ($input[$i] > $input[$j]) {
@@ -111,9 +113,11 @@ proc Median(float $input[])
         if ((size($input) % 2) == 1) {
         // Odd number of elements
         $result = $input[(size($input) / 2)];
+        return $result;
     } else {
         // Even number of elements
         $result = ($input[(size($input) / 2) - 1] + $input[(size($input) / 2)]) / 2.0;
+        return $result;
     }
  
 }
