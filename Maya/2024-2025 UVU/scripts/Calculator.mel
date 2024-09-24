@@ -9,12 +9,9 @@ proc Sum(float $input[])
         {
              $result += $input[$i];
         }     
+        print($result);
     }
-
-    print($result);
 }
-
-Sum(0);
 
 proc Difference(float $input[])
 {
@@ -26,15 +23,14 @@ proc Difference(float $input[])
         for ($i = 1; $i < size($input); $i++)
         {
              $result -= $input[$i];
-        }     
+        } 
+        print($result);    
     }
-
-    print($result);
 }
 
 proc Multiplication(float $input[])
 {
-        float $result = 1;
+    float $result = 1;
 
     if (size($input) == 0) {
         print("please input a number");
@@ -42,16 +38,14 @@ proc Multiplication(float $input[])
         for ($i = 0; $i < size($input); $i++)
         {
              $result *= $input[$i];
-        }     
+        }
+        print($result);   
     }
-
-    print($result);
 }
 
 proc Division(float $input[])
 {
-
-        float $result = $input[0];
+    float $result = $input[0];
 
     if (size($input) == 0) {
         print("please input a number");
@@ -64,23 +58,62 @@ proc Division(float $input[])
                 break;
             }
             $result /= $input[$i];
-        }     
+        } 
+        print($result);    
     }
-
-    print($result);
 }
 
-proc Power(float $input[])
+proc Power(float $base, float $power)
 {
+    float $result = $base;
 
+    for ($i = 1; $i < $power; $i++)
+    {
+        $result *= $base;
+    }
+    print($result);   
 }
 
 proc Mean(float $input[])
 {
+    float $result = 0;
 
+    if (size($input) == 0) {
+        print("please input a number");
+    } else {
+        for ($i = 0; $i < size($input); $i++)
+        {
+             $result += $input[$i];
+        }
+        $result = ($result / size($input));
+        print($result);  
+    }
 }
 
 proc Median(float $input[])
 {
+    float $result = 0;
 
+    if (size($input) == 0) {
+        print("please input a number");
+    }
+
+    for ($i = 0; $i < (size($input) - 1); $i++) {
+        for ($j = $i + 1; $j < size($input); $j++) {
+            if ($input[$i] > $input[$j]) {
+                float $temp = $input[$i];
+                $input[$i] = $input[$j];
+                $input[$j] = $temp;
+            }
+        }
+    }
+
+        if ((size($input) % 2) == 1) {
+        // Odd number of elements
+        $result = $input[(size($input) / 2)];
+    } else {
+        // Even number of elements
+        $result = ($input[(size($input) / 2) - 1] + $input[(size($input) / 2)]) / 2.0;
+    }
+ 
 }
