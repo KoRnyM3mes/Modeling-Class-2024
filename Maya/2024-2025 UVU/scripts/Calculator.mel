@@ -1,0 +1,243 @@
+proc float Sum(float $input[])
+{
+    float $result = 0;
+
+    if (size($input) == 0) {
+        print("please input a number");
+        return 0;
+    }
+
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $result += $input[$i];
+    }     
+        return $result;    
+}
+
+proc float Difference(float $input[])
+{
+    float $result = $input[0];
+
+    if (size($input) == 0) {
+        print("please input a number");
+        return 0;
+    }
+
+    for ($i = 1; $i < size($input); $i++)
+    {
+        $result -= $input[$i];
+    } 
+    return $result;    
+}
+
+proc float Multiplication(float $input[])
+{
+    float $result = 1;
+
+    if (size($input) == 0) {
+        print("please input a number");
+        return 0;
+    }
+
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $result *= $input[$i];
+    }
+    return $result;   
+}
+
+proc float Division(float $input[])
+{
+    float $result = $input[0];
+
+    if (size($input) == 0) {
+        print("please input a number");
+        return 0;
+    }
+
+    for ($i = 1; $i < size($input); $i++)
+    {
+        if ($input[$i] == 0){
+            print("DIVIDE BY ZERO\n");
+            $result = 0;
+            break;
+        }
+        $result /= $input[$i];
+    } 
+    return $result;    
+}
+
+proc float Power(float $base, float $power)
+{
+    float $result = $base;
+
+    for ($i = 1; $i < $power; $i++)
+    {
+        $result *= $base;
+    }
+
+    return $result;   
+}
+
+proc float Mean(float $input[])
+{
+    float $result = 0;
+
+    if (size($input) == 0) {
+        print("please input a number");
+        return 0;
+    }
+
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $result += $input[$i];
+    }
+
+    $result = ($result / size($input));
+    return $result;  
+}
+
+proc float Median(float $input[])
+{
+    float $result = 0;
+
+    if (size($input) == 0) {
+        print("please input a number");
+        return 0;
+    }
+    
+    for ($i = 0; $i < (size($input) - 1); $i++) {
+        for ($j = $i + 1; $j < size($input); $j++) {
+            if ($input[$i] > $input[$j]) {
+                float $temp = $input[$i];
+                $input[$i] = $input[$j];
+                $input[$j] = $temp;
+            }
+        }
+    }
+
+    if ((size($input) % 2) == 1) {
+        // Odd number of elements
+        $result = $input[(size($input) / 2)];
+        return $result;
+    } else {
+        // Even number of elements
+        $result = ($input[(size($input) / 2) - 1] + $input[(size($input) / 2)]) / 2.0;
+        return $result;
+    }
+}
+
+proc string Calculator(float $values[], string $operation)
+{
+    string $resultText;
+
+    switch ($operation){
+        case "Add":
+            $resultText = ("The sum of " + $values[0]);
+            if (size($values) < 3){
+                $resultText += (" and " + $values[1] + " is " + Sum($values));
+                return $resultText;
+                break; 
+            }
+
+            for ($i = 1; $i < (size($values) - 1); $i++)
+            {
+                $resultText +=  (", " + $values[$i]);
+            }
+            $resultText += (" and " + $values[$i] + " is " + Sum($values));
+
+            return $resultText;
+            break;
+
+        case "Subtract":
+            $resultText = ("The difference of " + $values[0]);
+            if (size($values) < 3){
+                $resultText += (" and " + $values[1] + " is " + Difference($values));
+                return $resultText;
+                break; 
+            }
+
+            for ($i = 1; $i < (size($values) - 1); $i++)
+            {
+                $resultText +=  (", " + $values[$i]);
+            }
+            $resultText += (" and " + $values[$i] + " is " + Difference($values));
+
+            return $resultText;
+            break;
+        case "Multiply":
+            $resultText = ("The multiplication of " + $values[0]);
+            if (size($values) < 3){
+                $resultText += (" and " + $values[1] + " is " + Multiplication($values));
+                return $resultText;
+                break; 
+            }
+
+            for ($i = 1; $i < (size($values) - 1); $i++)
+            {
+                $resultText +=  (", " + $values[$i]);
+            }
+            $resultText += (" and " + $values[$i] + " is " + Multiplication($values));
+
+            return $resultText;
+            break;
+        case "Divide":
+            $resultText = ("The division of " + $values[0]);
+            if (size($values) < 3){
+                $resultText += (" and " + $values[1] + " is " + Division($values));
+                return $resultText;
+                break; 
+            }
+
+            for ($i = 1; $i < (size($values) - 1); $i++)
+            {
+                $resultText +=  (", " + $values[$i]);
+            }
+            $resultText += (" and " + $values[$i] + " is " + Division($values));
+
+            return $resultText;
+            break;
+        case "Power":
+            if (size($values) > 2){
+                $resultText = "Please input two numbers";
+                return $resultText;
+                break;               
+            }
+
+            $resultText = ($values[0] + " to the power of " + $values[1] + " is " + Power($values[0], $values[1]));
+            return $resultText;
+            break;
+        case "Mean":
+            $resultText = ("The mean of " + $values[0]);
+            if (size($values) < 3){
+                $resultText += (" and " + $values[1] + " is " + Mean($values));
+                return $resultText;
+                break; 
+            }
+
+            for ($i = 1; $i < (size($values) - 1); $i++)
+            {
+                $resultText +=  (", " + $values[$i]);
+            }
+            $resultText += (" and " + $values[$i] + " is " + Mean($values));
+
+            return $resultText;
+            break;
+        case "Median":
+            $resultText = ("The median of " + $values[0]);
+            if (size($values) < 3){
+                $resultText += (" and " + $values[1] + " is " + Median($values));
+                return $resultText;
+                break; 
+            }
+
+            for ($i = 1; $i < (size($values) - 1); $i++)
+            {
+                $resultText +=  (", " + $values[$i]);
+            }
+            $resultText += (" and " + $values[$i] + " is " + Median($values));
+
+            return $resultText;
+            break;
+    }
+}

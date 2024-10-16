@@ -1,0 +1,17 @@
+The selected subnet has references to nodes outside
+the subnet, or has references that use absolute paths
+to operators inside the subnet.  These references
+should be converted to relative internal references
+or this operator type may not work properly in other
+Hip files.
+
+
+/obj/underwater_scene/Rock_Form: references /mat/concrete
+        which is outside the network being saved.
+/obj/underwater_scene/Rock_Form/material3: references /mat/whitepaint
+        which is outside the network being saved.
+/obj/underwater_scene/Rock_Form/material2: references /mat/whitepaint
+        which is outside the network being saved.
+/obj/underwater_scene/Rock_Form/material1: references /mat/whitepaint
+        which is outside the network being saved.
+Do you wish to save anyway?

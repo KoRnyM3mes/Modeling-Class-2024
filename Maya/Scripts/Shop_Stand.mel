@@ -1,0 +1,30 @@
+//define values
+string $selectedGeo[];
+string $text = "Shoppe";
+
+//where geometry is  x  y  z
+float $position[] = {1, 1, 1};
+//scale of geometry   x  y  z
+float $baseScale[] = {8, 2, 4};
+float $rodScale[] = {.165, 6};
+
+//place base of stand into world
+$selectedGeo = `polyCube -w $baseScale[0] -h $baseScale[1] -d $baseScale[2] -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1 -name "BaseStand"`;
+xform -worldSpace -translation 0 ($baseScale[1] / 2) 0 $selectedGeo;
+print($selectedGeo);
+
+//places two poles for the roof of the stand
+for ($i=0; $i<2; ++$i)
+{
+    $selectedGeo = `polyCylinder -r $rodScale[0] -h $rodScale[1] -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1 -name "SupportRod"`;
+    xform -worldSpace -translation ($baseScale[0] / 3) ($rodScale[1] / 2) 0 $selectedGeo;
+    $baseScale[0] = ($baseScale[0] *  -1);
+}
+
+//makes roof from copied base
+$selectedGeo = `polyCube -w $baseScale[0] -h $baseScale[1] -d $baseScale[2] -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1 -name "Roof"`;
+xform -worldSpace -translation 0 ($rodScale[1]) 0 $selectedGeo;
+
+//makes text for roof
+$selectedGeo = `textCurves -f "Times-Roman" -t $text`;
+xform -worldSpace -translation ($baseScale[0] * -1 / 2.22) ($rodScale[1] * .92) ($baseScale[2] / 2 + .1) $selectedGeo;
