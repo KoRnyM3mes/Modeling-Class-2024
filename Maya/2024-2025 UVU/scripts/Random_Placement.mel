@@ -1,4 +1,4 @@
-proc RandGenerator(int $dupeNum, float $xMin, float $yMin, float $zMin, float $xMax, float $yMax, float $zMax)
+global proc RandGenerator(int $dupeNum, float $xMin, float $yMin, float $zMin, float $xMax, float $yMax, float $zMax)
 {
     string $selected[] = `ls -sl`;
 
@@ -22,4 +22,48 @@ proc RandGenerator(int $dupeNum, float $xMin, float $yMin, float $zMin, float $x
     }
 }
 
-RandGenerator(10, 10, 0, 10, 20, 0, 20);
+global proc Gen_CMD()
+{
+    string $dupesField = `optionVar -q "ftDupes"`;
+    string $xMinField = `optionVar -q "ftXmin"`;
+    string $xMaxField = `optionVar -q "ftXmax"`;
+    string $yMinField = `optionVar -q "ftYmin"`;
+    string $yMaxField = `optionVar -q "ftYmax"`;
+    string $zMinField = `optionVar -q "ftZmin"`;
+    string $zMaxField = `optionVar -q "ftZmax"`;
+    
+    string $uiDupes = `intField -q -value $dupesField`;
+    string $uiXmin = `floatField -q -value $xMinField`;
+    string $uiXmax = `floatField -q -value $xMaxField`;
+    string $uiYmin = `floatField -q -value $yMinField`;
+    string $uiYmax = `floatField -q -value $yMaxField`;
+    string $uiZmin = `floatField -q -value $zMinField`;
+    string $uiZmax = `floatField -q -value $zMaxField`;
+
+    RandGenerator($uiDupes, $uiXmin, $uiYmin, $uiZmin, $uiXmax, $uiYmax, $uiZmax);
+}
+
+global proc GeneratorUI()
+{
+    string $mWindow = "gWin";
+
+    if (`window -exists $mWindow`){
+        deleteUI $mWindow;
+    }
+
+    $mWindow = `window -title "Random OBJ Generator"
+                    -widthHeight 300 400
+                    -sizeable 1
+                    -resizeToFitChildren 1
+                    $mWindow`;
+    string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+    optionVar -stringValue "ftDupes" `intField -parent $mColumn`;
+    optionVar -stringValue "ftXmin" `floatField -parent $mColumn`;
+    optionVar -stringValue "ftXmax" `floatField -parent $mColumn`;
+    optionVar -stringValue "ftYmin" `floatField -parent $mColumn`;
+    optionVar -stringValue "ftYmax" `floatField -parent $mColumn`;
+    optionVar -stringValue "ftZmin" `floatField -parent $mColumn`;
+    optionVar -stringValue "ftZmax" `floatField -parent $mColumn`;
+    button -parent $mColumn -label "Duplicate" -command "Gen_Cmd";
+    showWindow $mWindow;
+}
