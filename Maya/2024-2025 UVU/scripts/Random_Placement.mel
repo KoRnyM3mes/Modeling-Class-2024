@@ -1,21 +1,25 @@
-proc global RandGenerator(int $dupeNum, float $xMin, float $yMin, float $zMin, float $xMax, float $yMax, float $zMax,)
+proc RandGenerator(int $dupeNum, float $xMin, float $yMin, float $zMin, float $xMax, float $yMax, float $zMax)
 {
     string $selected[] = `ls -sl`;
 
-    if size($selected[]) = 0
+    if (size($selected) == 0)
     {
-        break;
+        return;
     }
 
-    for ($i = 0; $i < size($selected[]); $i++)
+    for ($i = 0; $i < $dupeNum; $i++)
     {
-        duplicate $selected[$i];
+        string $dupes[] = `duplicate $selected`;
 
-        for ($j = 0; $j < $dupeNum; $j++)
+        for ($j = 0; $j < size($selected); $j++)
         {
-            float $randX= `rand `
-            float $randy=
-            float $randZ=
+            float $randX= `rand $xMin $xMax`;
+            float $randY= `rand $yMin $yMax`;
+            float $randZ= `rand $zMin $zMax`;
+
+            xform  -ws -t $randX $randY $randZ $dupes[$j];
         }
     }
 }
+
+RandGenerator(10, 10, 0, 10, 20, 0, 20);
