@@ -132,7 +132,7 @@ proc string Calculator(float $values[], string $operation)
     string $resultText;
 
     switch ($operation){
-        case "Add":
+        case "1":
             $resultText = ("The sum of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Sum($values));
@@ -149,7 +149,7 @@ proc string Calculator(float $values[], string $operation)
             return $resultText;
             break;
 
-        case "Subtract":
+        case "2":
             $resultText = ("The difference of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Difference($values));
@@ -165,7 +165,7 @@ proc string Calculator(float $values[], string $operation)
 
             return $resultText;
             break;
-        case "Multiply":
+        case "3":
             $resultText = ("The multiplication of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Multiplication($values));
@@ -181,7 +181,7 @@ proc string Calculator(float $values[], string $operation)
 
             return $resultText;
             break;
-        case "Divide":
+        case "4":
             $resultText = ("The division of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Division($values));
@@ -197,7 +197,7 @@ proc string Calculator(float $values[], string $operation)
 
             return $resultText;
             break;
-        case "Power":
+        case "5":
             if (size($values) > 2){
                 $resultText = "Please input two numbers";
                 return $resultText;
@@ -207,7 +207,7 @@ proc string Calculator(float $values[], string $operation)
             $resultText = ($values[0] + " to the power of " + $values[1] + " is " + Power($values[0], $values[1]));
             return $resultText;
             break;
-        case "Mean":
+        case "6":
             $resultText = ("The mean of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Mean($values));
@@ -223,7 +223,7 @@ proc string Calculator(float $values[], string $operation)
 
             return $resultText;
             break;
-        case "Median":
+        case "7":
             $resultText = ("The median of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Median($values));
@@ -240,4 +240,25 @@ proc string Calculator(float $values[], string $operation)
             return $resultText;
             break;
     }
+}
+
+global proc CalcUI()
+{
+    string $cWindow = "cWin";
+
+    if (`window -exists $cWindow`){
+        deleteUI $cWindow;
+    }
+
+    $cWindow = `window -title "Calculator"
+                 -widthHeight 300 400
+                 -sizeable 1
+                 -resizeToFitChildren 1
+                 $cWindow`;
+    string $mColumn = `columnLayout -parent $cWindow -adjustableColumn 1`;
+    optionVar -stringValue "cOperation" `radioButton -parent $cColumn -label "Choose operation"`;
+    optionVar -stringValue "cInputs" `intField -parent $cColumn`;
+    string $mFrame = `frameLayout -parent $cWindow -label "Input numbers"`;
+
+
 }
