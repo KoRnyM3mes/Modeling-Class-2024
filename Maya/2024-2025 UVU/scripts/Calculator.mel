@@ -242,39 +242,50 @@ global proc string Calculator(float $values[], int $operation)
     }
 }
 
-
 global proc CalcUI_CMD()
 {
     string $valueField = `optionVar -q "cValues"`;
     string $opField = `optionVar -q "cOperationCollection"`;
+    string $resultField = `optionVar -q "cMessage"`;
 
-    string $valueUI = `floatField -q -value $valueField`;
+    // Tokenize the input values string
+    string $valuesString[] = `tokenize $valueField ","`;
+    float $valueUI[];
+
+    // Convert tokenized strings to floats
+    for ($i = 0; $i < size($valuesString); $i++)
+    {
+        $valueUI[$i] = float($valuesString[$i]);
+    }
+
     string $opUI = `radioCollection -q -value $opField`;
 
-    Calculator($valueField, $opField)
+    // Call the calculator function and store the result
+    string $result = Calculator($valueUI, $opUI);
+    
+    // Update the text field with the result
+    textField -e -text $result $resultField;
 }
 
 global proc CalcUI()
 {
-    string $cWindow = "cWin";
+    string $mWindow = "cWin";
 
-    if (`window -exists $cWindow`){
-        deleteUI $cWindow;
+    if (`window -exists $mWindow`){
+        deleteUI $mWindow;
     }
 
-    $cWindow = `window -title "Calculator"
+    $mWindow = `window -title "Calculator"
                  -widthHeight 300 400
                  -sizeable 1
                  -resizeToFitChildren 1
-                 $cWindow`;
+                 $mWindow`;
 
-    string $mFrame = `frameLayout -parent $cWindow -label "Input numbers below"`;
+    string $mFrame = `frameLayout -parent $mWindow -label "Input numbers below"`;
     optionVar -stringValue "cValues" `floatField -parent $mFrame`;
-    optionVar -stringValue "cAddTo" `button -label "Add to operation" -parent $mFrame`;
-    optionVar -stringValue "cClear" `button -label "Clear" -parent $mFrame`;
     button -label "Calculate!" -parent $mFrame -command "CalcUI_CMD";
 
-    string $mGrid = `gridLayout -numberOfColumns 4 -cellWidthHeight 100 50 -parent $cWindow`;
+    string $mGrid = `gridLayout -numberOfColumns 4 -cellWidthHeight 100 50 -parent $mWindow`;
     optionVar -stringValue "cOperationCollection" `radioCollection -parent $mGrid`;
     optionVar -stringValue "cOperation1" `radioButton -label "Add"`;
     optionVar -stringValue "cOperation2" `radioButton -label "Subtract"`;
