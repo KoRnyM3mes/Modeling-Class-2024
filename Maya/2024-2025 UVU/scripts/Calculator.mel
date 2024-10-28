@@ -127,12 +127,12 @@ proc float Median(float $input[])
     }
 }
 
-global proc string Calculator(float $values[], int $operation)
+global proc string Calculator(float $values[], string $operation)
 {
     string $resultText;
 
     switch ($operation){
-        case 1:
+        case "Add":
             $resultText = ("The sum of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Sum($values));
@@ -149,7 +149,7 @@ global proc string Calculator(float $values[], int $operation)
             return $resultText;
             break;
 
-        case 2:
+        case "Subtract":
             $resultText = ("The difference of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Difference($values));
@@ -165,7 +165,7 @@ global proc string Calculator(float $values[], int $operation)
 
             return $resultText;
             break;
-        case 3:
+        case "Multiply":
             $resultText = ("The multiplication of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Multiplication($values));
@@ -181,7 +181,7 @@ global proc string Calculator(float $values[], int $operation)
 
             return $resultText;
             break;
-        case 4:
+        case "Divide":
             $resultText = ("The division of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Division($values));
@@ -197,7 +197,7 @@ global proc string Calculator(float $values[], int $operation)
 
             return $resultText;
             break;
-        case 5:
+        case "Power":
             if (size($values) > 2){
                 $resultText = "Please input two numbers";
                 return $resultText;
@@ -207,7 +207,7 @@ global proc string Calculator(float $values[], int $operation)
             $resultText = ($values[0] + " to the power of " + $values[1] + " is " + Power($values[0], $values[1]));
             return $resultText;
             break;
-        case 6:
+        case "Mean":
             $resultText = ("The mean of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Mean($values));
@@ -223,7 +223,7 @@ global proc string Calculator(float $values[], int $operation)
 
             return $resultText;
             break;
-        case 7:
+        case "Median":
             $resultText = ("The median of " + $values[0]);
             if (size($values) < 3){
                 $resultText += (" and " + $values[1] + " is " + Median($values));
@@ -245,7 +245,7 @@ global proc string Calculator(float $values[], int $operation)
 global proc CalcUI_CMD()
 {
     string $valueField = `optionVar -q "cValues"`;
-    string $opField = `optionVar -q "cOperationCollection"`;
+    string $opField = `optionVar -q "cOperation"`;
     string $resultField = `optionVar -q "cMessage"`;
 
     // Tokenize the input values string
@@ -261,11 +261,9 @@ global proc CalcUI_CMD()
     {
         $valueFloat[$i] = float($valueArray[$i]);
     }
-
-    string $opUI = `radioCollection -q $opField`;
     
-    print $opUI;
-
+    string $opUI = `textField -q -text $opField`;
+    
     string $result = Calculator($valueFloat, $opUI);
     
     // Update the text field with the result
@@ -287,18 +285,10 @@ global proc CalcUI()
                  $mWindow`;
 
     string $mFrame = `frameLayout -parent $mWindow -label "Input numbers below"`;
-    optionVar -stringValue "cValues" `textField -parent $mFrame`;
+    optionVar -stringValue "cValues" `textField -pht "1,2,3,4" -parent $mFrame`;
+    optionVar -stringValue "cOperation" `textField -pht "Operation" -parent $mFrame`;
+    textField -editable 0 -height 50 -text "Options: Add Subtract Multiply Divide Power Mean Median" -parent $mFrame;
     button -label "Calculate!" -parent $mFrame -command "CalcUI_CMD";
-
-    string $mGrid = `gridLayout -numberOfColumns 4 -cellWidthHeight 100 50 -parent $mWindow`;
-    optionVar -stringValue "cOperationCollection" `radioCollection -parent $mGrid`;
-    optionVar -stringValue "cOperation1" `radioButton -label "Add"`;
-    optionVar -stringValue "cOperation2" `radioButton -label "Subtract"`;
-    optionVar -stringValue "cOperation3" `radioButton -label "Multiply"`;
-    optionVar -stringValue "cOperation4" `radioButton -label "Divide"`;
-    optionVar -stringValue "cOperation5" `radioButton -label "Power"`;
-    optionVar -stringValue "cOperation6" `radioButton -label "Mean"`;
-    optionVar -stringValue "cOperation7" `radioButton -label "Median"`;
     optionVar -stringValue "cMessage" `textField -editable 0 -height 50 -parent $mFrame`;
 
     showWindow $mWindow;
