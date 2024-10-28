@@ -249,19 +249,24 @@ global proc CalcUI_CMD()
     string $resultField = `optionVar -q "cMessage"`;
 
     // Tokenize the input values string
-    string $valuesString[] = `tokenize $valueField ","`;
-    float $valueUI[];
-
+    string $valueUI = `textField -q -text $valueField`;
+    string $valueArray[];
+    int $numValues = `tokenize $valueUI "," $valueArray`;
+    float $valueFloat[];
+    
+    
+    
     // Convert tokenized strings to floats
-    for ($i = 0; $i < size($valuesString); $i++)
+    for ($i = 0; $i < $numValues; $i++)
     {
-        $valueUI[$i] = float($valuesString[$i]);
+        $valueFloat[$i] = float($valueArray[$i]);
     }
 
-    string $opUI = `radioCollection -q -value $opField`;
+    string $opUI = `radioCollection -q $opField`;
+    
+    print $opUI;
 
-    // Call the calculator function and store the result
-    string $result = Calculator($valueUI, $opUI);
+    string $result = Calculator($valueFloat, $opUI);
     
     // Update the text field with the result
     textField -e -text $result $resultField;
@@ -282,7 +287,7 @@ global proc CalcUI()
                  $mWindow`;
 
     string $mFrame = `frameLayout -parent $mWindow -label "Input numbers below"`;
-    optionVar -stringValue "cValues" `floatField -parent $mFrame`;
+    optionVar -stringValue "cValues" `textField -parent $mFrame`;
     button -label "Calculate!" -parent $mFrame -command "CalcUI_CMD";
 
     string $mGrid = `gridLayout -numberOfColumns 4 -cellWidthHeight 100 50 -parent $mWindow`;
@@ -296,5 +301,7 @@ global proc CalcUI()
     optionVar -stringValue "cOperation7" `radioButton -label "Median"`;
     optionVar -stringValue "cMessage" `textField -editable 0 -height 50 -parent $mFrame`;
 
-    showWindow $cWindow;
+    showWindow $mWindow;
 }
+
+CalcUI();
