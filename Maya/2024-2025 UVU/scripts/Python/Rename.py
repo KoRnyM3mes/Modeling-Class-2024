@@ -2,6 +2,8 @@ import maya.cmds as cmd
 
 def Rename(name=str):
     sels = cmd.ls(selection = True)
+    if len(sels) == 0:
+       return
     hashNum = name.count('#')
     nameParts = name.rpartition('#')
     namePartsL = list(nameParts)
