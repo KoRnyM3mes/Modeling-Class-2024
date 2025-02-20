@@ -21,7 +21,7 @@ def ControlMaker():
             ctrlName = (obj + "_Ctrl")
         ctrlList.append(ctrlName)
         ctrl = cmd.circle(name = ctrlName)
-        cmd.xform(ctrl, t=[trans[0], trans[1], trans[2]], ro=[rot[0], rot[1], (rot[2] + 90)])
+        cmd.xform(ctrl, t=[trans[0], trans[1], trans[2]], ro=[rot[0], rot[1], (rot[2])])
     Group(ctrlList)
 
 
